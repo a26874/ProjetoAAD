@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.InserirDadosButton = new System.Windows.Forms.Button();
             this.MostrarDadosButton = new System.Windows.Forms.Button();
             this.dataGridDados = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridDados)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,6 +68,12 @@
             this.dataGridDados.Size = new System.Drawing.Size(671, 153);
             this.dataGridDados.TabIndex = 2;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(211, 32);
+            // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -86,6 +94,7 @@
         private System.Windows.Forms.Button InserirDadosButton;
         private System.Windows.Forms.Button MostrarDadosButton;
         private System.Windows.Forms.DataGridView dataGridDados;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace ProjetoAAD
@@ -78,39 +79,83 @@ namespace ProjetoAAD
         }
 
         /// <summary>
+        /// Insere o codigoPostal.
+        /// </summary>
+        /// <param name="listaAux"></param>
+        /// <returns></returns>
+        public bool InserirCodigoPostal(List<string> listaAux)
+        {
+            foreach (string comando in listaAux)
+            {
+                using (SqlCommand checkCommand = new SqlCommand($"SELECT COUNT(*) FROM CodigoPostal WHERE CodPostal = '{comando.Split('\'')[1]}'", baseDadosAad))
+                {
+                    try
+                    {
+                        int count = (int)checkCommand.ExecuteScalar();
+
+                        if (count == 0)
+                        {
+                            using (SqlCommand inserirDados = new SqlCommand(comando, baseDadosAad))
+                            {
+                                inserirDados.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    catch (SqlException)
+                    {
+                    }
+                }
+            }
+            return true;
+        }
+        public bool InserirTiposContacto(List<string> listaAux)
+        {
+            foreach (string comando in listaAux)
+            {
+                using (SqlCommand checkCommand = new SqlCommand($"SELECT COUNT(*) FROM TiposContacto WHERE DescContacto = '{comando.Split('\'')[1]}'", baseDadosAad))
+                {
+                    try
+                    {
+                        int count = (int)checkCommand.ExecuteScalar();
+
+                        if (count == 0)
+                        {
+                            using (SqlCommand inserirDados = new SqlCommand(comando, baseDadosAad))
+                            {
+                                inserirDados.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    catch (SqlException)
+                    {
+                    }
+                }
+            }
+            return true;
+        }
+
+        
+        /// <summary>
         /// Insere dados em tabelas.
         /// </summary>
         /// <param name="nomeTabela"></param>
         /// <returns></returns>
         public bool InsereDados()
         {
-            List<string> listaComandos = new List<string>();
+            
+            List<string> listaComandosLocalidade = new List<string>();
+            List<string> listaComandosTiposContacto = new List<string>();
+            listaComandosLocalidade.Add("insert into CodigoPostal(CodPostal, Localidade) values('4211-123','asdasd');");
+            InserirCodigoPostal(listaComandosLocalidade);
+            listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Telemovel');");
+            listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Telefone');");
+            listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Email');");
+            listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Fax');");
+            InserirTiposContacto(listaComandosTiposContacto);
+            Dictionary<int, string> listaComandosCliente = new Dictionary<int, string>();
+            listaComandosCliente.Add(1, "insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('Marco', 01/01/2022, 'ASD', '4700-888';");
+            //InserirClientes(listaComandosCliente);
 
-            listaComandos.Add("insert into CodigoPostal(CodPostal, Localidade) values('4211-123','asdasd');");
-            listaComandos.Add("insert into TiposContacto(DescContacto) values ('Telemovel');");
-            listaComandos.Add("insert into TiposContacto(DescContacto) values ('Telefone');");
-            listaComandos.Add("insert into TiposContacto(DescContacto) values ('Email');");
-            listaComandos.Add("insert into TiposContacto(DescContacto) values ('Fax');");
-            SqlCommand inserirDados = new SqlCommand();
-            foreach (string comando in listaComandos)
-            {
-                inserirDados.CommandText = comando;
-                inserirDados.Connection = baseDadosAad;
-                try
-                {
-                    inserirDados.ExecuteNonQuery();
-                }
-                catch (SqlException)
-                {
-                    
-                }
-            }
-            //SqlCommand inserirDados = new SqlCommand("insert into CodigoPostal (CodPostal, Localidade) values ('4211-123','asdasd');",baseDadosAad);
-            //inserirDados = new SqlCommand("insert into TipoContacto (TCID, DescContacto) values (1,'Telemovel');", baseDadosAad);
-            //inserirDados = new SqlCommand("insert into TipoContacto (TCID, DescContacto) values (2,'Telefone');", baseDadosAad);
-            //inserirDados = new SqlCommand("insert into TipoContacto (TCID, DescContacto) values (3,'Email');", baseDadosAad);
-            //inserirDados = new SqlCommand("insert into TipoContacto (TCID, DescContacto) values (4,'Fax');", baseDadosAad);
-            //inserirDados.ExecuteNonQuery();
             return true;
         }
         /// <summary>
