@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.InserirDadosButton = new System.Windows.Forms.Button();
             this.MostrarDadosButton = new System.Windows.Forms.Button();
             this.dataGridDados = new System.Windows.Forms.DataGridView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MostrarBDTextBox = new System.Windows.Forms.TextBox();
+            this.menuTipoContacto = new System.Windows.Forms.MenuStrip();
+            this.selecioneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridDados)).BeginInit();
+            this.menuTipoContacto.SuspendLayout();
             this.SuspendLayout();
             // 
             // InserirDadosButton
@@ -68,24 +70,50 @@
             this.dataGridDados.Size = new System.Drawing.Size(671, 153);
             this.dataGridDados.TabIndex = 2;
             // 
-            // contextMenuStrip1
+            // MostrarBDTextBox
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(211, 32);
+            this.MostrarBDTextBox.Location = new System.Drawing.Point(266, 156);
+            this.MostrarBDTextBox.Name = "MostrarBDTextBox";
+            this.MostrarBDTextBox.Size = new System.Drawing.Size(100, 22);
+            this.MostrarBDTextBox.TabIndex = 3;
+            // 
+            // menuTipoContacto
+            // 
+            this.menuTipoContacto.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuTipoContacto.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuTipoContacto.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selecioneToolStripMenuItem});
+            this.menuTipoContacto.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.menuTipoContacto.Location = new System.Drawing.Point(354, 211);
+            this.menuTipoContacto.Name = "menuTipoContacto";
+            this.menuTipoContacto.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuTipoContacto.Size = new System.Drawing.Size(242, 28);
+            this.menuTipoContacto.TabIndex = 16;
+            this.menuTipoContacto.Text = "TipoContacto";
+            // 
+            // selecioneToolStripMenuItem
+            // 
+            this.selecioneToolStripMenuItem.Name = "selecioneToolStripMenuItem";
+            this.selecioneToolStripMenuItem.Size = new System.Drawing.Size(87, 24);
+            this.selecioneToolStripMenuItem.Text = "Selecione";
             // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.menuTipoContacto);
+            this.Controls.Add(this.MostrarBDTextBox);
             this.Controls.Add(this.dataGridDados);
             this.Controls.Add(this.MostrarDadosButton);
             this.Controls.Add(this.InserirDadosButton);
             this.Name = "Interface";
             this.Text = "InterfaceAAD";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridDados)).EndInit();
+            this.menuTipoContacto.ResumeLayout(false);
+            this.menuTipoContacto.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -94,7 +122,9 @@
         private System.Windows.Forms.Button InserirDadosButton;
         private System.Windows.Forms.Button MostrarDadosButton;
         private System.Windows.Forms.DataGridView dataGridDados;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.TextBox MostrarBDTextBox;
+        private System.Windows.Forms.MenuStrip menuTipoContacto;
+        private System.Windows.Forms.ToolStripMenuItem selecioneToolStripMenuItem;
     }
 }
 

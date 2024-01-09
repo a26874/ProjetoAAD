@@ -122,6 +122,7 @@ namespace ProjetoAAD
                         {
                             using (SqlCommand inserirDados = new SqlCommand(comando, baseDadosAad))
                             {
+                                
                                 inserirDados.ExecuteNonQuery();
                             }
                         }
@@ -134,11 +135,38 @@ namespace ProjetoAAD
             return true;
         }
 
-        
         /// <summary>
-        /// Insere dados em tabelas.
+        /// Cria o dropdown com os tipos de contacto existentes.
         /// </summary>
-        /// <param name="nomeTabela"></param>
+        /// <param name="aux"></param>
+        public void CriarDropDown(ToolStripMenuItem aux)
+        {
+            SqlCommand obterDadosTipoContacto = new SqlCommand("Select DescContacto from TiposContacto", baseDadosAad);
+
+
+            var adaptadorDados = new SqlDataAdapter(obterDadosTipoContacto);
+            var auxDataSet = new DataSet();
+            List<string> tipoContactos = new List<string>();
+            adaptadorDados.Fill(auxDataSet);
+            foreach (DataRow linha in auxDataSet.Tables[0].Rows)
+            {
+                if (linha["DescContacto"].ToString() == string.Empty)
+                    continue;
+                tipoContactos.Add(linha["DescContacto"].ToString());
+            }
+            foreach(string s in tipoContactos)
+            {
+                var novoDropDown = new ToolStripMenuItem()
+                {
+                    Name = s + "dropDown",
+                    Text = s
+                };
+                aux.DropDown.Items.Add(novoDropDown);
+            }
+        }
+        /// <summary>
+        /// Insere dados na base dados.
+        /// </summary>
         /// <returns></returns>
         public bool InsereDados()
         {
@@ -164,6 +192,8 @@ namespace ProjetoAAD
         /// <param name="dadosMostrar"></param>
         public DataGridView MostrarDados(string dadosMostrar, DataGridView auxDataGrid)
         {
+            if (dadosMostrar == string.Empty)
+                return null;
             SqlCommand mostraDados = new SqlCommand($"Select * from {dadosMostrar};", baseDadosAad);
 
             var adaptadorDados = new SqlDataAdapter(mostraDados);

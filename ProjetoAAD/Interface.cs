@@ -15,7 +15,10 @@ namespace ProjetoAAD
                 MessageBox.Show("Conectado");
             else
                 MessageBox.Show("Falha na conexão");
+            
+            
             FormClosing += Interface_FormClosing;
+            baseDados.CriarDropDown(selecioneToolStripMenuItem);
         }
 
         /// <summary>
@@ -45,9 +48,13 @@ namespace ProjetoAAD
         private void MostrarDadosButton_Click(object sender, EventArgs e)
         {
             dataGridDados.DataSource = null;
-            baseDados.MostrarDados("CodigoPostal",dataGridDados);
+            string aux = string.Empty;
+
+            aux = MostrarBDTextBox.Text;
+            baseDados.MostrarDados(aux,dataGridDados);
 
         }
 
+        
     }
 }
