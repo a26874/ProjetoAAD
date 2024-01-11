@@ -157,13 +157,19 @@ namespace ProjetoAAD
             foreach(string s in tipoContactos)
             {
                 var novoDropDown = new ToolStripMenuItem()
-                {
+                {   
                     Name = s + "dropDown",
                     Text = s
                 };
                 aux.DropDown.Items.Add(novoDropDown);
             }
         }
+
+        private void ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+        }
+
         /// <summary>
         /// Insere dados na base dados.
         /// </summary>

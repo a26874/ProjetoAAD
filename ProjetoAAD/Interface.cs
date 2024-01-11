@@ -5,6 +5,7 @@ namespace ProjetoAAD
 {
     public partial class Interface : Form
     {
+        private string selecioneMenuItemStripAtual;
         private SQL baseDados;
         public Interface()
         {
@@ -55,6 +56,12 @@ namespace ProjetoAAD
 
         }
 
-        
+        private void selecioneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem selectedMenuItem)
+            {
+                selecioneToolStripMenuItem.Text = selectedMenuItem.Text;
+            }
+        }
     }
 }

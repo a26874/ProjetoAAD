@@ -96,6 +96,7 @@
             this.selecioneToolStripMenuItem.Name = "selecioneToolStripMenuItem";
             this.selecioneToolStripMenuItem.Size = new System.Drawing.Size(87, 24);
             this.selecioneToolStripMenuItem.Text = "Selecione";
+            this.selecioneToolStripMenuItem.Click += new System.EventHandler(this.selecioneToolStripMenuItem_Click);
             // 
             // Interface
             // 
