@@ -5,13 +5,15 @@ namespace ProjetoAAD
 {
     public partial class Interface : Form
     {
-        private string selecioneMenuItemStripAtual;
         private SQL baseDados;
         public Interface()
         {
             InitializeComponent();
-
-            baseDados = new SQL("MARCO\\MARCO","MARCO\\marco","ProjetoAAD");
+            //fixo:
+            baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG");
+            
+            //portatil:
+            //baseDados = new SQL("MARCO\\MARCO","MARCO\\marco","ProjetoAAD");
             if (baseDados.Conectar())
                 MessageBox.Show("Conectado");
             else
@@ -20,6 +22,22 @@ namespace ProjetoAAD
             
             FormClosing += Interface_FormClosing;
             baseDados.CriarDropDown(selecioneToolStripMenuItem);
+
+            Timer t1 = new Timer();
+            t1.Interval = 5000;
+            t1.Tick += T1_Tick;
+        }
+
+        private void T1_Tick(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem s in selecioneToolStripMenuItem.DropDownItems)
+            {
+                if (s.Name == "TelefonedropDown" && s.Pressed)
+                {
+                    selecioneToolStripMenuItem.Text = s.Text;
+                }
+                Application.DoEvents();
+            }
         }
 
         /// <summary>
@@ -58,10 +76,6 @@ namespace ProjetoAAD
 
         private void selecioneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (sender is ToolStripMenuItem selectedMenuItem)
-            {
-                selecioneToolStripMenuItem.Text = selectedMenuItem.Text;
-            }
         }
     }
 }

@@ -108,6 +108,12 @@ namespace ProjetoAAD
             }
             return true;
         }
+
+        /// <summary>
+        /// Insere tipos de contacto.
+        /// </summary>
+        /// <param name="listaAux">The lista aux.</param>
+        /// <returns></returns>
         public bool InserirTiposContacto(List<string> listaAux)
         {
             foreach (string comando in listaAux)
@@ -135,6 +141,38 @@ namespace ProjetoAAD
             return true;
         }
 
+
+        /// <summary>
+        /// Cria item/cliques para o dropdown.
+        /// </summary>
+        /// <param name="aux">The aux.</param>
+        /// <param name="tiposContacto">The tipos contacto.</param>
+        public void CriarItem(ToolStripMenuItem aux, List<string> tiposContacto)
+        {
+            foreach (string s in tiposContacto)
+            {
+                var novoDropDown = new ToolStripMenuItem()
+                {
+                    Name = s + "dropDown",
+                    Text = s
+                };
+                novoDropDown.Click += (sender, e) => NovoDropDown_Click(sender, e, aux);
+                aux.DropDownItems.Add(novoDropDown);
+            }
+        }
+
+        /// <summary>
+        /// Quando clicado, muda o texto.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="aux">The aux.</param>
+        private void NovoDropDown_Click(object sender, EventArgs e, ToolStripMenuItem aux)
+        {
+            ToolStripMenuItem itemClicado = (ToolStripMenuItem)sender;
+            aux.Text = itemClicado.Text;
+        }
+
         /// <summary>
         /// Cria o dropdown com os tipos de contacto existentes.
         /// </summary>
@@ -154,20 +192,7 @@ namespace ProjetoAAD
                     continue;
                 tipoContactos.Add(linha["DescContacto"].ToString());
             }
-            foreach(string s in tipoContactos)
-            {
-                var novoDropDown = new ToolStripMenuItem()
-                {   
-                    Name = s + "dropDown",
-                    Text = s
-                };
-                aux.DropDown.Items.Add(novoDropDown);
-            }
-        }
-
-        private void ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            CriarItem(aux,tipoContactos);
         }
 
         /// <summary>
@@ -192,6 +217,7 @@ namespace ProjetoAAD
 
             return true;
         }
+
         /// <summary>
         /// Dado nome de uma tabela mostra todos os dados
         /// </summary>
