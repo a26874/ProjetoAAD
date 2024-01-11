@@ -13,10 +13,21 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ProjetoAAD
 {
+    public class ComboItem
+    {
+        public int ID { get; set; }
+        public string Texto {  get; set; }
+
+        public override string ToString()
+        {
+            return Texto.ToString();
+        }
+    }
     public class SQL
     {
         #region ATRIBUTOS
@@ -34,7 +45,7 @@ namespace ProjetoAAD
         /// <param name="source"></param>
         /// <param name="user"></param>
         /// <param name="catalog"></param>
-        public SQL(string source, string user, string catalog)
+        public SQL(string source, string user, string catalog,out SqlConnection aux)
         {
             SqlConnectionStringBuilder novaConexao = new SqlConnectionStringBuilder();
             novaConexao.DataSource = source;
@@ -42,6 +53,7 @@ namespace ProjetoAAD
             novaConexao.IntegratedSecurity = true;
             novaConexao.InitialCatalog = catalog;
             baseDadosAad = new SqlConnection(novaConexao.ConnectionString);
+            aux = new SqlConnection(novaConexao.ConnectionString);
         }
         #endregion
 
@@ -142,64 +154,13 @@ namespace ProjetoAAD
         }
 
 
-        /// <summary>
-        /// Cria item/cliques para o dropdown.
-        /// </summary>
-        /// <param name="aux">The aux.</param>
-        /// <param name="tiposContacto">The tipos contacto.</param>
-        public void CriarItem(ToolStripMenuItem aux, List<string> tiposContacto)
-        {
-            foreach (string s in tiposContacto)
-            {
-                var novoDropDown = new ToolStripMenuItem()
-                {
-                    Name = s + "dropDown",
-                    Text = s
-                };
-                novoDropDown.Click += (sender, e) => NovoDropDown_Click(sender, e, aux);
-                aux.DropDownItems.Add(novoDropDown);
-            }
-        }
 
-        /// <summary>
-        /// Quando clicado, muda o texto.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        /// <param name="aux">The aux.</param>
-        private void NovoDropDown_Click(object sender, EventArgs e, ToolStripMenuItem aux)
-        {
-            ToolStripMenuItem itemClicado = (ToolStripMenuItem)sender;
-            aux.Text = itemClicado.Text;
-        }
-
-        /// <summary>
-        /// Cria o dropdown com os tipos de contacto existentes.
-        /// </summary>
-        /// <param name="aux"></param>
-        public void CriarDropDown(ToolStripMenuItem aux)
-        {
-            SqlCommand obterDadosTipoContacto = new SqlCommand("Select DescContacto from TiposContacto", baseDadosAad);
-
-
-            var adaptadorDados = new SqlDataAdapter(obterDadosTipoContacto);
-            var auxDataSet = new DataSet();
-            List<string> tipoContactos = new List<string>();
-            adaptadorDados.Fill(auxDataSet);
-            foreach (DataRow linha in auxDataSet.Tables[0].Rows)
-            {
-                if (linha["DescContacto"].ToString() == string.Empty)
-                    continue;
-                tipoContactos.Add(linha["DescContacto"].ToString());
-            }
-            CriarItem(aux,tipoContactos);
-        }
-
+        
         /// <summary>
         /// Insere dados na base dados.
         /// </summary>
         /// <returns></returns>
-        public bool InsereDados()
+        public bool InsereDados(Form aux)
         {
             
             List<string> listaComandosLocalidade = new List<string>();
@@ -211,9 +172,11 @@ namespace ProjetoAAD
             listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Email');");
             listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Fax');");
             InserirTiposContacto(listaComandosTiposContacto);
-            Dictionary<int, string> listaComandosCliente = new Dictionary<int, string>();
-            listaComandosCliente.Add(1, "insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('Marco', 01/01/2022, 'ASD', '4700-888';");
-            //InserirClientes(listaComandosCliente);
+
+           
+            //Dictionary<int, string> listaComandosCliente = new Dictionary<int, string>();
+            //listaComandosCliente.Add(1, "insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('Marco', 01/01/2022, 'ASD', '4700-888';");
+            ////InserirClientes(listaComandosCliente);
 
             return true;
         }

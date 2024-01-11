@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace ProjetoAAD
 {
     public partial class Interface : Form
     {
         private SQL baseDados;
+        private SqlConnection baseDadosConection;
         public Interface()
         {
             InitializeComponent();
             //fixo:
-            baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG");
-            
+            //baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG");
+
             //portatil:
-            //baseDados = new SQL("MARCO\\MARCO","MARCO\\marco","ProjetoAAD");
+            baseDados = new SQL("MARCO\\MARCO", "MARCO\\marco", "ProjetoAAD", out baseDadosConection);
             if (baseDados.Conectar())
                 MessageBox.Show("Conectado");
             else
@@ -21,23 +24,8 @@ namespace ProjetoAAD
             
             
             FormClosing += Interface_FormClosing;
-            baseDados.CriarDropDown(selecioneToolStripMenuItem);
+            //baseDados.CriarComboBox(comboBoxTiposContacto);
 
-            Timer t1 = new Timer();
-            t1.Interval = 5000;
-            t1.Tick += T1_Tick;
-        }
-
-        private void T1_Tick(object sender, EventArgs e)
-        {
-            foreach (ToolStripMenuItem s in selecioneToolStripMenuItem.DropDownItems)
-            {
-                if (s.Name == "TelefonedropDown" && s.Pressed)
-                {
-                    selecioneToolStripMenuItem.Text = s.Text;
-                }
-                Application.DoEvents();
-            }
         }
 
         /// <summary>
@@ -57,7 +45,11 @@ namespace ProjetoAAD
         /// <param name="e"></param>
         private void InserirDadosButton_Click(object sender, EventArgs e)
         {
-            baseDados.InsereDados();
+            baseDados.InsereDados(this);
+            InserirCliente novoCliente = new InserirCliente(this, baseDadosConection);
+            novoCliente.Show();
+            Hide();
+
         }
         /// <summary>
         /// Ao clicar no botão, mostra dados.
