@@ -13,14 +13,17 @@ namespace ProjetoAAD
         {
             InitializeComponent();
             //fixo:
-            baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG", out baseDadosConection);
+            //baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG", out baseDadosConection);
 
             //portatil:
-            //baseDados = new SQL("MARCO\\MARCO", "MARCO\\marco", "ProjetoAAD", out baseDadosConection);
+            baseDados = new SQL("MARCO\\MARCO", "MARCO\\marco", "ProjetoAAD", out baseDadosConection);
             if (baseDados.Conectar())
                 MessageBox.Show("Conectado");
             else
+            {
                 MessageBox.Show("Falha na conexão");
+                Application.Exit();
+            }
             
             
             FormClosing += Interface_FormClosing;

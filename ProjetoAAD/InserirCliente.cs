@@ -21,6 +21,11 @@ namespace ProjetoAAD
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Construtor por parametros.
+        /// </summary>
+        /// <param name="Menu"></param>
+        /// <param name="conexaoBd"></param>
         public InserirCliente(Interface Menu, SqlConnection conexaoBd)
         {
             InitializeComponent();
@@ -73,8 +78,12 @@ namespace ProjetoAAD
 
             string nomeCliente = nomeClienteTextBox.Text;
             string ruaCliente = nomeRuaTextBox.Text;
-            DateTime teste = new DateTime();
+            DateTime teste = DateTime.Now;
 
+            ////Fixo
+            //SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
+
+            //Portatil
             SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
             baseDadosAad.Open();
             inserirCliente.ExecuteNonQuery();
@@ -90,7 +99,7 @@ namespace ProjetoAAD
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void inserirContactoButton_Click(object sender, EventArgs e)
         {
-            string nomeCliente = nomeClienteTextBox.Text;
+            string nomeCliente = nomeClienteInserirContactosTextBox.Text;
             int valorContacto = 0;
             if(numerosInserir==0 && !jaDefinidoNumerosInserir)
             {
@@ -98,8 +107,6 @@ namespace ProjetoAAD
                     numerosInserir = numeroContactos;
                 jaDefinidoNumerosInserir = true;
             }
-            if (numerosInserir == 0 && jaDefinidoNumerosInserir)
-                return;
             SqlCommand verificarCliente = new SqlCommand($"Select ClienteID from Cliente where NomeCliente = '{nomeCliente}';", baseDadosAad);
             baseDadosAad.Open();
             object idCliente = verificarCliente.ExecuteScalar();
@@ -117,11 +124,29 @@ namespace ProjetoAAD
             }
             if (int.TryParse(contactoTextBox.Text, out int valorContactoAux))
                 valorContacto = valorContactoAux;
-            SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
+            ////Fixo
+            //SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
+
+            //Portatil
+            SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, ValorContacto) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
             inserirContactos.ExecuteNonQuery();
-            
+            contactoInseridoSucessoLabel.Show();
+            contactoInseridoSucessoLabel.Text = $"Contacto {valorContacto} inserido com sucesso.";
             baseDadosAad.Close();
             numerosInserir--;
+            if (numerosInserir == 0 && jaDefinidoNumerosInserir)
+            {
+                contactoTextBox.Hide();
+                ContactoLabel.Hide();
+                inserirContactoButton.Hide();
+                tiposContactoLabel.Hide();
+                comboBoxTiposContacto.Hide();
+                jaDefinidoNumerosInserir = false;
+                numeroContactosTextBox.Text = null;
+                contactoInseridoSucessoLabel.Text = "Todos os contactos inseridos.";
+                contactoTextBox.Text = null;
+                return;
+            }
         }
 
 
@@ -144,5 +169,6 @@ namespace ProjetoAAD
                 comboBoxTiposContacto.Show();
             }
         }
+
     }
 }
