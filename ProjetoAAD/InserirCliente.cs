@@ -15,6 +15,8 @@ namespace ProjetoAAD
     {
         private Interface menuInterface;
         private SqlConnection baseDadosAad;
+        private static int numerosInserir = 0;
+        private static bool jaDefinidoNumerosInserir = false;
         public InserirCliente()
         {
             InitializeComponent();
@@ -61,6 +63,11 @@ namespace ProjetoAAD
             }
             CriarItem(aux, listaTipos);
         }
+        /// <summary>
+        /// Insere dados de um cliente, na base de dados.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void InserirDadosButton_Click(object sender, EventArgs e)
         {
 
@@ -68,13 +75,74 @@ namespace ProjetoAAD
             string ruaCliente = nomeRuaTextBox.Text;
             DateTime teste = DateTime.Now;
 
-            SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste}', '{ruaCliente}', '4211-123');", baseDadosAad);
+            SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
             baseDadosAad.Open();
             inserirCliente.ExecuteNonQuery();
-            object a = inserirCliente.ExecuteScalar();
             baseDadosAad.Close();
 
+            
+        }
 
+        /// <summary>
+        /// Handles the Click event of the inserirContactoButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void inserirContactoButton_Click(object sender, EventArgs e)
+        {
+            string nomeCliente = nomeClienteTextBox.Text;
+            int valorContacto = 0;
+            if(numerosInserir==0 && !jaDefinidoNumerosInserir)
+            {
+                if (int.TryParse(numeroContactosTextBox.Text, out int numeroContactos))
+                    numerosInserir = numeroContactos;
+                jaDefinidoNumerosInserir = true;
+            }
+            if (numerosInserir == 0 && jaDefinidoNumerosInserir)
+                return;
+            SqlCommand verificarCliente = new SqlCommand($"Select ClienteID from Cliente where NomeCliente = '{nomeCliente}';", baseDadosAad);
+            baseDadosAad.Open();
+            object idCliente = verificarCliente.ExecuteScalar();
+            if (idCliente != null)
+                idCliente = (int)idCliente;
+
+            int tcId = 0;
+            foreach (ComboItem a in comboBoxTiposContacto.Items)
+            {
+                if (comboBoxTiposContacto.SelectedItem.ToString() == a.Texto)
+                {
+                    tcId = a.ID;
+                    break;
+                }
+            }
+            if (int.TryParse(contactoTextBox.Text, out int valorContactoAux))
+                valorContacto = valorContactoAux;
+            SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
+            inserirContactos.ExecuteNonQuery();
+            
+            baseDadosAad.Close();
+            numerosInserir--;
+        }
+
+
+        /// <summary>
+        /// Mostra o necessário para inserir contactos.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void InserirContactosButton_Click(object sender, EventArgs e)
+        {
+            int numerosInserir = 0;
+            if (int.TryParse(numeroContactosTextBox.Text, out int numeroContactos))
+                numerosInserir = numeroContactos;
+            if (numerosInserir>0)
+            {
+                contactoTextBox.Show();
+                ContactoLabel.Show();
+                inserirContactoButton.Show();
+                tiposContactoLabel.Show();
+                comboBoxTiposContacto.Show();
+            }
         }
     }
 }
