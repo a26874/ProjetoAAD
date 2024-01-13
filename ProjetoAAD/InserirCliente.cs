@@ -66,7 +66,7 @@ namespace ProjetoAAD
 
             string nomeCliente = nomeClienteTextBox.Text;
             string ruaCliente = nomeRuaTextBox.Text;
-            DateTime teste = DateTime.Now;
+            DateTime teste = new DateTime();
 
             SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste}', '{ruaCliente}', '4211-123');", baseDadosAad);
             baseDadosAad.Open();
