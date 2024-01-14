@@ -2,6 +2,7 @@
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace ProjetoAAD
 {
@@ -13,7 +14,7 @@ namespace ProjetoAAD
         {
             InitializeComponent();
             //fixo:
-            baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG", out baseDadosConection);
+            baseDados = new SQL("GONCALO", "GONCALO\\gonca", "projeto", out baseDadosConection);
 
             //portatil:
             //baseDados = new SQL("MARCO\\MARCO", "MARCO\\marco", "ProjetoAAD", out baseDadosConection);
@@ -79,6 +80,44 @@ namespace ProjetoAAD
             AlterarDados novoAlterarDados = new AlterarDados(this, baseDadosConection);
             novoAlterarDados.Show();
             Hide();
+        }
+
+
+        /// <summary>
+        /// Ao clicar no botao, faz a query
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void QueryButton_Click(object sender, EventArgs e)
+        {
+            baseDadosConection.Open();
+
+            string query = "SELECT CodigoPostal.Localidade, COUNT(DISTINCT Imovel.ImovelID) AS ContaImoveis, COUNT(DISTINCT Loja.LojaID) AS ContaAgencias " +
+                            "FROM CodigoPostal " +
+                            "LEFT JOIN Imovel ON CodigoPostal.CodPostal = Imovel.CodPostal " +
+                            "LEFT JOIN Loja ON CodigoPostal.CodPostal = Loja.CodPostal " +
+                            "GROUP BY CodigoPostal.Localidade;";
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(query, baseDadosConection);
+
+            DataTable dataTable = new DataTable();
+
+            // Preenche o DataTable com os dados do SqlDataAdapter
+            dataAdapter.Fill(dataTable);
+
+            // Fecha a conexão com o banco de dados após o preenchimento do DataTable
+            baseDadosConection.Close();
+
+            // Exibe os resultados, por exemplo, em um DataGridView
+            dataGridDados.DataSource = dataTable;
+        }
+
+
+
+
+        private void Interface_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
