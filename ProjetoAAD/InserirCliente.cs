@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProjetoAAD
@@ -80,7 +75,7 @@ namespace ProjetoAAD
             inserirCliente.ExecuteNonQuery();
             baseDadosAad.Close();
 
-            
+
         }
 
         /// <summary>
@@ -92,7 +87,8 @@ namespace ProjetoAAD
         {
             string nomeCliente = nomeClienteTextBox.Text;
             int valorContacto = 0;
-            if(numerosInserir==0 && !jaDefinidoNumerosInserir)
+            string tipoContacto = string.Empty;
+            if (numerosInserir == 0 && !jaDefinidoNumerosInserir)
             {
                 if (int.TryParse(numeroContactosTextBox.Text, out int numeroContactos))
                     numerosInserir = numeroContactos;
@@ -100,26 +96,46 @@ namespace ProjetoAAD
             }
             if (numerosInserir == 0 && jaDefinidoNumerosInserir)
                 return;
-            SqlCommand verificarCliente = new SqlCommand($"Select ClienteID from Cliente where NomeCliente = '{nomeCliente}';", baseDadosAad);
-            baseDadosAad.Open();
-            object idCliente = verificarCliente.ExecuteScalar();
-            if (idCliente != null)
-                idCliente = (int)idCliente;
-
+            List<Tuple<string, int>> listaContactosInserir = new List<Tuple<string, int>>();
             int tcId = 0;
+            
             foreach (ComboItem a in comboBoxTiposContacto.Items)
             {
                 if (comboBoxTiposContacto.SelectedItem.ToString() == a.Texto)
                 {
-                    tcId = a.ID;
+                    tipoContacto = a.Texto;
                     break;
                 }
             }
             if (int.TryParse(contactoTextBox.Text, out int valorContactoAux))
                 valorContacto = valorContactoAux;
-            SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
-            inserirContactos.ExecuteNonQuery();
-            
+            Tuple<string,int> contactoInserir = new Tuple<string,int>(tipoContacto, valorContacto);
+            listaContactosInserir.Add(contactoInserir);
+
+            dataGridListaContactosInserir.DataSource = listaContactosInserir;
+            dataGridListaContactosInserir.AutoGenerateColumns = true;
+            dataGridListaContactosInserir.Refresh();
+
+            //SqlCommand verificarCliente = new SqlCommand($"Select ClienteID from Cliente where NomeCliente = '{nomeCliente}';", baseDadosAad);
+            //baseDadosAad.Open();
+            //object idCliente = verificarCliente.ExecuteScalar();
+            //if (idCliente != null)
+            //    idCliente = (int)idCliente;
+
+            //int tcId = 0;
+            //foreach (ComboItem a in comboBoxTiposContacto.Items)
+            //{
+            //    if (comboBoxTiposContacto.SelectedItem.ToString() == a.Texto)
+            //    {
+            //        tcId = a.ID;
+            //        break;
+            //    }
+            //}
+            //if (int.TryParse(contactoTextBox.Text, out int valorContactoAux))
+            //    valorContacto = valorContactoAux;
+            //SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
+            //inserirContactos.ExecuteNonQuery();
+
             baseDadosAad.Close();
             numerosInserir--;
         }
@@ -135,7 +151,7 @@ namespace ProjetoAAD
             int numerosInserir = 0;
             if (int.TryParse(numeroContactosTextBox.Text, out int numeroContactos))
                 numerosInserir = numeroContactos;
-            if (numerosInserir>0)
+            if (numerosInserir > 0)
             {
                 contactoTextBox.Show();
                 ContactoLabel.Show();

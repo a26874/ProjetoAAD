@@ -41,6 +41,8 @@
             this.inserirContactoButton = new System.Windows.Forms.Button();
             this.tiposContactoLabel = new System.Windows.Forms.Label();
             this.InserirContactosButton = new System.Windows.Forms.Button();
+            this.dataGridListaContactosInserir = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridListaContactosInserir)).BeginInit();
             this.SuspendLayout();
             // 
             // nomeRuaTextBox
@@ -165,11 +167,20 @@
             this.InserirContactosButton.UseVisualStyleBackColor = true;
             this.InserirContactosButton.Click += new System.EventHandler(this.InserirContactosButton_Click);
             // 
+            // dataGridListaContactosInserir
+            // 
+            this.dataGridListaContactosInserir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridListaContactosInserir.Location = new System.Drawing.Point(573, 17);
+            this.dataGridListaContactosInserir.Name = "dataGridListaContactosInserir";
+            this.dataGridListaContactosInserir.Size = new System.Drawing.Size(115, 142);
+            this.dataGridListaContactosInserir.TabIndex = 34;
+            // 
             // InserirCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 171);
+            this.ClientSize = new System.Drawing.Size(700, 171);
+            this.Controls.Add(this.dataGridListaContactosInserir);
             this.Controls.Add(this.InserirContactosButton);
             this.Controls.Add(this.tiposContactoLabel);
             this.Controls.Add(this.inserirContactoButton);
@@ -186,6 +197,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "InserirCliente";
             this.Text = "Inserir Cliente";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridListaContactosInserir)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,5 +218,6 @@
         private System.Windows.Forms.Button inserirContactoButton;
         private System.Windows.Forms.Label tiposContactoLabel;
         private System.Windows.Forms.Button InserirContactosButton;
+        private System.Windows.Forms.DataGridView dataGridListaContactosInserir;
     }
 }
