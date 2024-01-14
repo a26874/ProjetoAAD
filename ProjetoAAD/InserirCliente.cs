@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProjetoAAD
@@ -16,6 +21,11 @@ namespace ProjetoAAD
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Construtor por parametros.
+        /// </summary>
+        /// <param name="Menu"></param>
+        /// <param name="conexaoBd"></param>
         public InserirCliente(Interface Menu, SqlConnection conexaoBd)
         {
             InitializeComponent();
@@ -70,12 +80,16 @@ namespace ProjetoAAD
             string ruaCliente = nomeRuaTextBox.Text;
             DateTime teste = DateTime.Now;
 
+            ////Fixo
+            //SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
+
+            //Portatil
             SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
             baseDadosAad.Open();
             inserirCliente.ExecuteNonQuery();
             baseDadosAad.Close();
 
-
+            
         }
 
         /// <summary>
@@ -85,59 +99,54 @@ namespace ProjetoAAD
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void inserirContactoButton_Click(object sender, EventArgs e)
         {
-            string nomeCliente = nomeClienteTextBox.Text;
+            string nomeCliente = nomeClienteInserirContactosTextBox.Text;
             int valorContacto = 0;
-            string tipoContacto = string.Empty;
-            if (numerosInserir == 0 && !jaDefinidoNumerosInserir)
+            if(numerosInserir==0 && !jaDefinidoNumerosInserir)
             {
                 if (int.TryParse(numeroContactosTextBox.Text, out int numeroContactos))
                     numerosInserir = numeroContactos;
                 jaDefinidoNumerosInserir = true;
             }
-            if (numerosInserir == 0 && jaDefinidoNumerosInserir)
-                return;
-            List<Tuple<string, int>> listaContactosInserir = new List<Tuple<string, int>>();
+            SqlCommand verificarCliente = new SqlCommand($"Select ClienteID from Cliente where NomeCliente = '{nomeCliente}';", baseDadosAad);
+            baseDadosAad.Open();
+            object idCliente = verificarCliente.ExecuteScalar();
+            if (idCliente != null)
+                idCliente = (int)idCliente;
+
             int tcId = 0;
-            
             foreach (ComboItem a in comboBoxTiposContacto.Items)
             {
                 if (comboBoxTiposContacto.SelectedItem.ToString() == a.Texto)
                 {
-                    tipoContacto = a.Texto;
+                    tcId = a.ID;
                     break;
                 }
             }
             if (int.TryParse(contactoTextBox.Text, out int valorContactoAux))
                 valorContacto = valorContactoAux;
-            Tuple<string,int> contactoInserir = new Tuple<string,int>(tipoContacto, valorContacto);
-            listaContactosInserir.Add(contactoInserir);
-
-            dataGridListaContactosInserir.DataSource = listaContactosInserir;
-            dataGridListaContactosInserir.AutoGenerateColumns = true;
-            dataGridListaContactosInserir.Refresh();
-
-            //SqlCommand verificarCliente = new SqlCommand($"Select ClienteID from Cliente where NomeCliente = '{nomeCliente}';", baseDadosAad);
-            //baseDadosAad.Open();
-            //object idCliente = verificarCliente.ExecuteScalar();
-            //if (idCliente != null)
-            //    idCliente = (int)idCliente;
-
-            //int tcId = 0;
-            //foreach (ComboItem a in comboBoxTiposContacto.Items)
-            //{
-            //    if (comboBoxTiposContacto.SelectedItem.ToString() == a.Texto)
-            //    {
-            //        tcId = a.ID;
-            //        break;
-            //    }
-            //}
-            //if (int.TryParse(contactoTextBox.Text, out int valorContactoAux))
-            //    valorContacto = valorContactoAux;
+            ////Fixo
             //SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
-            //inserirContactos.ExecuteNonQuery();
 
+            //Portatil
+            SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, ValorContacto) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
+            inserirContactos.ExecuteNonQuery();
+            contactoInseridoSucessoLabel.Show();
+            contactoInseridoSucessoLabel.Text = $"Contacto {valorContacto} inserido com sucesso.";
             baseDadosAad.Close();
             numerosInserir--;
+            if (numerosInserir == 0 && jaDefinidoNumerosInserir)
+            {
+                contactoTextBox.Hide();
+                ContactoLabel.Hide();
+                inserirContactoButton.Hide();
+                tiposContactoLabel.Hide();
+                comboBoxTiposContacto.Hide();
+                jaDefinidoNumerosInserir = false;
+                numeroContactosTextBox.Text = null;
+                contactoInseridoSucessoLabel.Text = "Todos os contactos inseridos.";
+                contactoTextBox.Text = null;
+                return;
+            }
         }
 
 
@@ -151,7 +160,7 @@ namespace ProjetoAAD
             int numerosInserir = 0;
             if (int.TryParse(numeroContactosTextBox.Text, out int numeroContactos))
                 numerosInserir = numeroContactos;
-            if (numerosInserir > 0)
+            if (numerosInserir>0)
             {
                 contactoTextBox.Show();
                 ContactoLabel.Show();
@@ -160,5 +169,6 @@ namespace ProjetoAAD
                 comboBoxTiposContacto.Show();
             }
         }
+
     }
 }
