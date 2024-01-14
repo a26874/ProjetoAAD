@@ -165,7 +165,11 @@ namespace ProjetoAAD
             
             List<string> listaComandosLocalidade = new List<string>();
             List<string> listaComandosTiposContacto = new List<string>();
-            listaComandosLocalidade.Add("insert into CodigoPostal(CodPostal, Localidade) values('4211-123','asdasd');");
+            listaComandosLocalidade.Add("insert into CodigoPostal(CodPostal, Localidade) values('4211-123','asd');");
+            listaComandosLocalidade.Add("insert into CodigoPostal(CodPostal, Localidade) values('4444-123','bvraga');");
+            listaComandosLocalidade.Add("insert into CodigoPostal(CodPostal, Localidade) values('1111-123','prto');");
+            listaComandosLocalidade.Add("insert into CodigoPostal(CodPostal, Localidade) values('2222-123','carad');");
+            listaComandosLocalidade.Add("insert into CodigoPostal(CodPostal, Localidade) values('4331-123','aqqqd');");
             InserirCodigoPostal(listaComandosLocalidade);
             listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Telemovel');");
             listaComandosTiposContacto.Add("insert into TiposContacto(DescContacto) values ('Telefone');");

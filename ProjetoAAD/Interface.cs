@@ -69,8 +69,16 @@ namespace ProjetoAAD
 
         }
 
-        private void selecioneToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Abre uma nova interface para alterar dados.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void alterarDadosButton_Click(object sender, EventArgs e)
         {
+            AlterarDados novoAlterarDados = new AlterarDados(this, baseDadosConection);
+            novoAlterarDados.Show();
+            Hide();
         }
     }
 }
