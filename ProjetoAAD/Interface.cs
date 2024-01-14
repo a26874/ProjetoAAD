@@ -13,8 +13,12 @@ namespace ProjetoAAD
         public Interface()
         {
             InitializeComponent();
+            //Goncalo:
+            //baseDados = new SQL("GONCALO", "GONCALO\\gonca", "projeto", out baseDadosConection);
+
+
             //fixo:
-            baseDados = new SQL("GONCALO", "GONCALO\\gonca", "projeto", out baseDadosConection);
+            baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG", out baseDadosConection);
 
             //portatil:
             //baseDados = new SQL("MARCO\\MARCO", "MARCO\\marco", "ProjetoAAD", out baseDadosConection);
