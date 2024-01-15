@@ -14,11 +14,13 @@ namespace ProjetoAAD
         {
             InitializeComponent();
             //Goncalo:
-            //baseDados = new SQL("GONCALO", "GONCALO\\gonca", "projeto", out baseDadosConection);
+            baseDados = new SQL("GONCALO", "GONCALO\\gonca", "projeto", out baseDadosConection);
 
+            //Diogo
+            //baseDados = new SQL("DESKTOP-BAJ0CE4", "DESKTOP-BAJ0CE4\diogo", "AAD_BD", out baseDadosConection);
 
             //fixo:
-            baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG", out baseDadosConection);
+            //baseDados = new SQL("DESKTOP-4IUUJPT", "DESKTOP-4IUUJPT\\marco", "ImobiliariaMDG", out baseDadosConection);
 
             //portatil:
             //baseDados = new SQL("MARCO\\MARCO", "MARCO\\marco", "ProjetoAAD", out baseDadosConection);
