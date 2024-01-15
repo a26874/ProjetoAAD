@@ -67,9 +67,9 @@
             // dataGridSelecionarLinha
             // 
             this.dataGridSelecionarLinha.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridSelecionarLinha.Location = new System.Drawing.Point(71, 186);
+            this.dataGridSelecionarLinha.Location = new System.Drawing.Point(45, 186);
             this.dataGridSelecionarLinha.Name = "dataGridSelecionarLinha";
-            this.dataGridSelecionarLinha.Size = new System.Drawing.Size(146, 99);
+            this.dataGridSelecionarLinha.Size = new System.Drawing.Size(318, 147);
             this.dataGridSelecionarLinha.TabIndex = 2;
             this.dataGridSelecionarLinha.Visible = false;
             // 

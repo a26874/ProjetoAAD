@@ -12,7 +12,7 @@ namespace ProjetoAAD
         private SqlConnection baseDadosAad;
         private static int numerosInserir = 0;
         private static bool jaDefinidoNumerosInserir = false;
-        private static List<Tuple<string, string>> listaContactosInserir = new List<Tuple<string, string>>();
+        private static List<Tuple<int, string, string>> listaContactosInserir = new List<Tuple<int, string, string>>();
 
         public InserirCliente()
         {
@@ -76,17 +76,25 @@ namespace ProjetoAAD
             string nomeCliente = nomeClienteTextBox.Text;
             string ruaCliente = nomeRuaTextBox.Text;
             DateTime teste = DateTime.Now;
-
+            string tipoContacto = string.Empty;
             ////Fixo
-            //SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
+            SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) output inserted.clienteID values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
 
             //Portatil
-            SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
+            //SqlCommand inserirCliente = new SqlCommand($"insert into Cliente(NomeCliente, DataNascimento, Rua, CodPostal) values('{nomeCliente}', '{teste.ToString("yyyy-MM-dd HH:mm:ss")}', '{ruaCliente}', '4211-123');", baseDadosAad);
             baseDadosAad.Open();
+            int idCliente= (int)inserirCliente.ExecuteScalar();
             inserirCliente.ExecuteNonQuery();
+
+            
+            foreach (Tuple<int,string,string> s in listaContactosInserir)
+            {
+                SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{s.Item1}','{s.Item3}')", baseDadosAad);
+                inserirContactos.ExecuteNonQuery();
+            }
             baseDadosAad.Close();
-
-
+            Close();
+            menuInterface.Show();
         }
 
         /// <summary>
@@ -98,6 +106,7 @@ namespace ProjetoAAD
         {
             string valorContacto = contactoTextBox.Text;
             string tipoContacto = string.Empty;
+            int tcID = 0;
             if (numerosInserir == 0 && !jaDefinidoNumerosInserir)
             {
                 if (int.TryParse(numeroContactosTextBox.Text, out int numeroContactos))
@@ -110,10 +119,11 @@ namespace ProjetoAAD
                 if (comboBoxTiposContacto.SelectedItem.ToString() == a.Texto)
                 {
                     tipoContacto = a.Texto;
+                    tcID = a.ID;
                     break;
                 }
             }
-            Tuple<string, string> contactoInserir = new Tuple<string, string>(tipoContacto, valorContacto);
+            Tuple<int,string, string> contactoInserir = new Tuple<int,string, string>(tcID,tipoContacto, valorContacto);
             
             listaContactosInserir.Add(contactoInserir);
             contactoInseridoSucessoLabel.Show();
@@ -133,8 +143,14 @@ namespace ProjetoAAD
                 contactoTextBox.Text = null;
                 dataGridListaInserirContactos.DataSource = null;
                 dataGridListaInserirContactos.Columns.Clear();
-                dataGridListaInserirContactos.DataSource = listaContactosInserir;
+                List<Tuple<string, string>> listaContactosInserirAux = new List<Tuple<string, string>>();
+                foreach(var contactoAux in listaContactosInserir)
+                {
+                    listaContactosInserirAux.Add(new Tuple<string,string>(contactoAux.Item2, contactoAux.Item3));
+                }
+                dataGridListaInserirContactos.DataSource = listaContactosInserirAux;
                 dataGridListaInserirContactos.AutoGenerateColumns = true;
+                dataGridListaInserirContactos.AutoSize = true;
                 dataGridListaInserirContactos.Refresh();
                 return;
             }
@@ -159,101 +175,6 @@ namespace ProjetoAAD
                 tiposContactoLabel.Show();
                 comboBoxTiposContacto.Show();
             }
-        }
-
-        /// <summary>
-        /// Insere o contacto selecionado na base de dados.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void inserirBDButton_Click(object sender, EventArgs e)
-        {
-            string nomeCliente = nomeClienteInserirContactosTextBox.Text;
-            SqlCommand verificarCliente = new SqlCommand($"Select ClienteID from Cliente where NomeCliente = '{nomeCliente}';", baseDadosAad);
-            baseDadosAad.Open();
-            object idCliente = verificarCliente.ExecuteScalar();
-            if (idCliente != null)
-                idCliente = (int)idCliente;
-            int indexLinha = dataGridListaInserirContactos.SelectedRows[0].Index;
-            DataGridViewRow linha = dataGridListaInserirContactos.Rows[indexLinha];
-            string tipoContacto = Convert.ToString(linha.Cells["Item1"].Value);
-            string valorContacto = Convert.ToString(linha.Cells["Item2"].Value);
-            int tcID = 0;
-            foreach (ComboItem a in comboBoxTiposContacto.Items)
-            {
-                if (a.Texto == tipoContacto)
-                {
-                    tcID = a.ID;
-                    break;
-                }
-            }
-            ObterTipoDeContactos(valorContacto, tcID, out int contactoInserir, out string contactoEmailInserir);
-
-            ////Fixo
-            if (contactoInserir != 0)
-            {
-                SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcID}','{contactoInserir}')", baseDadosAad);
-                inserirContactos.ExecuteNonQuery();
-            }
-            else
-            {
-                SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, Valor) values('{idCliente}', '{tcID}','{contactoEmailInserir}')", baseDadosAad);
-                inserirContactos.ExecuteNonQuery();
-            }
-
-
-
-            //Portatil
-            //SqlCommand inserirContactos = new SqlCommand($"insert into Contacto(ClienteID, TCID, ValorContacto) values('{idCliente}', '{tcId}','{valorContacto}')", baseDadosAad);
-
-            baseDadosAad.Close();
-
-        }
-
-        /// <summary>
-        /// Conforme o tipo de contactos existentes, vai verificar o seu tipo e mudar para inteiro/string.
-        /// </summary>
-        /// <param name="tipoContacto"></param>
-        /// <param name="valorContacto"></param>
-        /// <param name="tcID"></param>
-        public bool ObterTipoDeContactos(string valorContacto, int tcID, out int contactoInserirAux, out string contactoEmailInserirAux)
-        {
-            int aux = 0;
-            switch (tcID)
-            {
-                case 1:
-                    if (int.TryParse(valorContacto, out aux))
-                    {
-                        contactoInserirAux = aux;
-                        contactoEmailInserirAux = string.Empty;
-                        return true;
-                    }
-                    break;
-
-                case 2:
-                    if (int.TryParse(valorContacto, out aux))
-                    {
-                        contactoInserirAux = aux;
-                        contactoEmailInserirAux = string.Empty;
-                        return true;
-                    }
-                    break;
-                case 3:
-                    contactoInserirAux = 0;
-                    contactoEmailInserirAux = valorContacto;
-                    return true;
-                case 4:
-                    if (int.TryParse(valorContacto, out aux))
-                    {
-                        contactoInserirAux = aux;
-                        contactoEmailInserirAux = string.Empty;
-                        return true;
-                    }
-                    break;
-            }
-            contactoInserirAux = 0;
-            contactoEmailInserirAux = string.Empty;
-            return false;
         }
     }
 }

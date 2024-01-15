@@ -50,7 +50,6 @@ namespace ProjetoAAD
             dataGridSelecionarLinha.DataSource = auxDataTable;
             dataGridSelecionarLinha.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridSelecionarLinha.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridSelecionarLinha.AutoSize = true;
             dataGridSelecionarLinha.Show();
         }
 
@@ -125,6 +124,7 @@ namespace ProjetoAAD
                 $"ClienteID = {idCliente}", baseDadosAad);
 
             alterarDados.ExecuteNonQuery();
+            alteradoComSucessoLabel.Text = "Cliente alterado com sucesso.";
             baseDadosAad.Close();
         }
     }

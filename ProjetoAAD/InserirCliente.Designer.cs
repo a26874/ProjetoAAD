@@ -41,18 +41,14 @@
             this.inserirContactoButton = new System.Windows.Forms.Button();
             this.tiposContactoLabel = new System.Windows.Forms.Label();
             this.InserirContactosButton = new System.Windows.Forms.Button();
-            this.painelSeparador = new System.Windows.Forms.Panel();
-            this.nomeClienteInserirContactosLabel = new System.Windows.Forms.Label();
-            this.nomeClienteInserirContactosTextBox = new System.Windows.Forms.TextBox();
             this.contactoInseridoSucessoLabel = new System.Windows.Forms.Label();
             this.dataGridListaInserirContactos = new System.Windows.Forms.DataGridView();
-            this.inserirBDButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridListaInserirContactos)).BeginInit();
             this.SuspendLayout();
             // 
             // nomeRuaTextBox
             // 
-            this.nomeRuaTextBox.Location = new System.Drawing.Point(9, 102);
+            this.nomeRuaTextBox.Location = new System.Drawing.Point(60, 104);
             this.nomeRuaTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.nomeRuaTextBox.Name = "nomeRuaTextBox";
             this.nomeRuaTextBox.Size = new System.Drawing.Size(76, 20);
@@ -61,7 +57,7 @@
             // ruaLabel
             // 
             this.ruaLabel.AutoSize = true;
-            this.ruaLabel.Location = new System.Drawing.Point(7, 77);
+            this.ruaLabel.Location = new System.Drawing.Point(57, 77);
             this.ruaLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ruaLabel.Name = "ruaLabel";
             this.ruaLabel.Size = new System.Drawing.Size(61, 13);
@@ -70,7 +66,7 @@
             // 
             // nomeClienteTextBox
             // 
-            this.nomeClienteTextBox.Location = new System.Drawing.Point(9, 42);
+            this.nomeClienteTextBox.Location = new System.Drawing.Point(60, 38);
             this.nomeClienteTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.nomeClienteTextBox.Name = "nomeClienteTextBox";
             this.nomeClienteTextBox.Size = new System.Drawing.Size(76, 20);
@@ -79,7 +75,7 @@
             // nomeClienteLabel
             // 
             this.nomeClienteLabel.AutoSize = true;
-            this.nomeClienteLabel.Location = new System.Drawing.Point(7, 17);
+            this.nomeClienteLabel.Location = new System.Drawing.Point(57, 17);
             this.nomeClienteLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nomeClienteLabel.Name = "nomeClienteLabel";
             this.nomeClienteLabel.Size = new System.Drawing.Size(73, 13);
@@ -88,7 +84,7 @@
             // 
             // InserirDadosButton
             // 
-            this.InserirDadosButton.Location = new System.Drawing.Point(9, 136);
+            this.InserirDadosButton.Location = new System.Drawing.Point(845, 136);
             this.InserirDadosButton.Margin = new System.Windows.Forms.Padding(2);
             this.InserirDadosButton.Name = "InserirDadosButton";
             this.InserirDadosButton.Size = new System.Drawing.Size(75, 22);
@@ -118,7 +114,7 @@
             // 
             // numeroContactosTextBox
             // 
-            this.numeroContactosTextBox.Location = new System.Drawing.Point(175, 102);
+            this.numeroContactosTextBox.Location = new System.Drawing.Point(175, 104);
             this.numeroContactosTextBox.Name = "numeroContactosTextBox";
             this.numeroContactosTextBox.Size = new System.Drawing.Size(73, 20);
             this.numeroContactosTextBox.TabIndex = 28;
@@ -172,32 +168,6 @@
             this.InserirContactosButton.UseVisualStyleBackColor = true;
             this.InserirContactosButton.Click += new System.EventHandler(this.InserirContactosButton_Click);
             // 
-            // painelSeparador
-            // 
-            this.painelSeparador.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.painelSeparador.Location = new System.Drawing.Point(118, 0);
-            this.painelSeparador.Margin = new System.Windows.Forms.Padding(2);
-            this.painelSeparador.Name = "painelSeparador";
-            this.painelSeparador.Size = new System.Drawing.Size(2, 171);
-            this.painelSeparador.TabIndex = 34;
-            // 
-            // nomeClienteInserirContactosLabel
-            // 
-            this.nomeClienteInserirContactosLabel.AutoSize = true;
-            this.nomeClienteInserirContactosLabel.Location = new System.Drawing.Point(811, 12);
-            this.nomeClienteInserirContactosLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.nomeClienteInserirContactosLabel.Name = "nomeClienteInserirContactosLabel";
-            this.nomeClienteInserirContactosLabel.Size = new System.Drawing.Size(73, 13);
-            this.nomeClienteInserirContactosLabel.TabIndex = 35;
-            this.nomeClienteInserirContactosLabel.Text = "Nome Cliente:";
-            // 
-            // nomeClienteInserirContactosTextBox
-            // 
-            this.nomeClienteInserirContactosTextBox.Location = new System.Drawing.Point(814, 35);
-            this.nomeClienteInserirContactosTextBox.Name = "nomeClienteInserirContactosTextBox";
-            this.nomeClienteInserirContactosTextBox.Size = new System.Drawing.Size(70, 20);
-            this.nomeClienteInserirContactosTextBox.TabIndex = 36;
-            // 
             // contactoInseridoSucessoLabel
             // 
             this.contactoInseridoSucessoLabel.AutoSize = true;
@@ -217,27 +187,13 @@
             this.dataGridListaInserirContactos.Size = new System.Drawing.Size(254, 151);
             this.dataGridListaInserirContactos.TabIndex = 38;
             // 
-            // inserirBDButton
-            // 
-            this.inserirBDButton.Location = new System.Drawing.Point(814, 67);
-            this.inserirBDButton.Name = "inserirBDButton";
-            this.inserirBDButton.Size = new System.Drawing.Size(70, 23);
-            this.inserirBDButton.TabIndex = 39;
-            this.inserirBDButton.Text = "Inserir BD";
-            this.inserirBDButton.UseVisualStyleBackColor = true;
-            this.inserirBDButton.Click += new System.EventHandler(this.inserirBDButton_Click);
-            // 
             // InserirCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 171);
-            this.Controls.Add(this.inserirBDButton);
             this.Controls.Add(this.dataGridListaInserirContactos);
             this.Controls.Add(this.contactoInseridoSucessoLabel);
-            this.Controls.Add(this.nomeClienteInserirContactosTextBox);
-            this.Controls.Add(this.nomeClienteInserirContactosLabel);
-            this.Controls.Add(this.painelSeparador);
             this.Controls.Add(this.InserirContactosButton);
             this.Controls.Add(this.tiposContactoLabel);
             this.Controls.Add(this.inserirContactoButton);
@@ -275,11 +231,7 @@
         private System.Windows.Forms.Button inserirContactoButton;
         private System.Windows.Forms.Label tiposContactoLabel;
         private System.Windows.Forms.Button InserirContactosButton;
-        private System.Windows.Forms.Panel painelSeparador;
-        private System.Windows.Forms.Label nomeClienteInserirContactosLabel;
-        private System.Windows.Forms.TextBox nomeClienteInserirContactosTextBox;
         private System.Windows.Forms.Label contactoInseridoSucessoLabel;
         private System.Windows.Forms.DataGridView dataGridListaInserirContactos;
-        private System.Windows.Forms.Button inserirBDButton;
     }
 }
