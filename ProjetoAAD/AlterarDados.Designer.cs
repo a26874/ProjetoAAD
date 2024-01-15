@@ -31,7 +31,6 @@
             this.TabelaMostrarLabel = new System.Windows.Forms.Label();
             this.tabelaAlterarTextBox = new System.Windows.Forms.TextBox();
             this.dataGridSelecionarLinha = new System.Windows.Forms.DataGridView();
-            this.alteradoComSucessoLabel = new System.Windows.Forms.Label();
             this.selecionarDadosButton = new System.Windows.Forms.Button();
             this.nomeClienteAlterarDadosLabel = new System.Windows.Forms.Label();
             this.nomeClienteAlterarTextBox = new System.Windows.Forms.TextBox();
@@ -72,16 +71,6 @@
             this.dataGridSelecionarLinha.Size = new System.Drawing.Size(318, 147);
             this.dataGridSelecionarLinha.TabIndex = 2;
             this.dataGridSelecionarLinha.Visible = false;
-            // 
-            // alteradoComSucessoLabel
-            // 
-            this.alteradoComSucessoLabel.AutoSize = true;
-            this.alteradoComSucessoLabel.Location = new System.Drawing.Point(531, 381);
-            this.alteradoComSucessoLabel.Name = "alteradoComSucessoLabel";
-            this.alteradoComSucessoLabel.Size = new System.Drawing.Size(35, 13);
-            this.alteradoComSucessoLabel.TabIndex = 3;
-            this.alteradoComSucessoLabel.Text = "label1";
-            this.alteradoComSucessoLabel.Visible = false;
             // 
             // selecionarDadosButton
             // 
@@ -207,7 +196,6 @@
             this.Controls.Add(this.nomeClienteAlterarTextBox);
             this.Controls.Add(this.nomeClienteAlterarDadosLabel);
             this.Controls.Add(this.selecionarDadosButton);
-            this.Controls.Add(this.alteradoComSucessoLabel);
             this.Controls.Add(this.dataGridSelecionarLinha);
             this.Controls.Add(this.tabelaAlterarTextBox);
             this.Controls.Add(this.TabelaMostrarLabel);
@@ -225,7 +213,6 @@
         private System.Windows.Forms.Label TabelaMostrarLabel;
         private System.Windows.Forms.TextBox tabelaAlterarTextBox;
         private System.Windows.Forms.DataGridView dataGridSelecionarLinha;
-        private System.Windows.Forms.Label alteradoComSucessoLabel;
         private System.Windows.Forms.Button selecionarDadosButton;
         private System.Windows.Forms.Label nomeClienteAlterarDadosLabel;
         private System.Windows.Forms.TextBox nomeClienteAlterarTextBox;

@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-
+using System.Threading;
 namespace ProjetoAAD
 {
     public partial class AlterarDados : Form
@@ -124,8 +124,10 @@ namespace ProjetoAAD
                 $"ClienteID = {idCliente}", baseDadosAad);
 
             alterarDados.ExecuteNonQuery();
-            alteradoComSucessoLabel.Text = "Cliente alterado com sucesso.";
             baseDadosAad.Close();
+            Thread.Sleep(3000);
+            Close();
+            menuInterface.Show();
         }
     }
 }
