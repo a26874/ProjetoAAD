@@ -121,7 +121,13 @@ namespace ProjetoAAD
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void apagarValoresButton_Click(object sender, EventArgs e)
         {
-
+            if (int.TryParse(removerTextBox.Text, out int idCliente))
+            {
+                SqlCommand removerCliente = new SqlCommand($"Exec ApagarCliente @IdCliente = {idCliente}", baseDadosConection);
+                baseDadosConection.Open();
+                removerCliente.ExecuteNonQuery();
+                baseDadosConection.Close();
+            }
         }
 
 
