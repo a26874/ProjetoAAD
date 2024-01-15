@@ -37,6 +37,7 @@
             this.queryButton = new System.Windows.Forms.Button();
             this.apagarValoresButton = new System.Windows.Forms.Button();
             this.removerTextBox = new System.Windows.Forms.TextBox();
+            this.idClienteLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridDados)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,7 +86,7 @@
             // 
             // alterarDadosButton
             // 
-            this.alterarDadosButton.Location = new System.Drawing.Point(56, 72);
+            this.alterarDadosButton.Location = new System.Drawing.Point(56, 67);
             this.alterarDadosButton.Name = "alterarDadosButton";
             this.alterarDadosButton.Size = new System.Drawing.Size(90, 23);
             this.alterarDadosButton.TabIndex = 4;
@@ -98,7 +99,7 @@
             this.queryButton.Location = new System.Drawing.Point(281, 162);
             this.queryButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.queryButton.Name = "queryButton";
-            this.queryButton.Size = new System.Drawing.Size(90, 19);
+            this.queryButton.Size = new System.Drawing.Size(90, 20);
             this.queryButton.TabIndex = 0;
             this.queryButton.Text = "Query";
             this.queryButton.UseVisualStyleBackColor = true;
@@ -121,11 +122,21 @@
             this.removerTextBox.Size = new System.Drawing.Size(76, 20);
             this.removerTextBox.TabIndex = 6;
             // 
+            // idClienteLabel
+            // 
+            this.idClienteLabel.AutoSize = true;
+            this.idClienteLabel.Location = new System.Drawing.Point(159, 99);
+            this.idClienteLabel.Name = "idClienteLabel";
+            this.idClienteLabel.Size = new System.Drawing.Size(56, 13);
+            this.idClienteLabel.TabIndex = 7;
+            this.idClienteLabel.Text = "ID Cliente:";
+            // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.idClienteLabel);
             this.Controls.Add(this.removerTextBox);
             this.Controls.Add(this.apagarValoresButton);
             this.Controls.Add(this.queryButton);
@@ -153,6 +164,7 @@
         private System.Windows.Forms.Button alterarDadosButton;
         private System.Windows.Forms.Button apagarValoresButton;
         private System.Windows.Forms.TextBox removerTextBox;
+        private System.Windows.Forms.Label idClienteLabel;
     }
 }
 
