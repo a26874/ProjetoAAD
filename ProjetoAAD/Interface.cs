@@ -96,11 +96,10 @@ namespace ProjetoAAD
         {
             baseDadosConection.Open();
 
-            string query = "SELECT CodigoPostal.Localidade, COUNT(DISTINCT Imovel.ImovelID) AS ContaImoveis, COUNT(DISTINCT Loja.LojaID) AS ContaAgencias " +
-                            "FROM CodigoPostal " +
-                            "LEFT JOIN Imovel ON CodigoPostal.CodPostal = Imovel.CodPostal " +
-                            "LEFT JOIN Loja ON CodigoPostal.CodPostal = Loja.CodPostal " +
-                            "GROUP BY CodigoPostal.Localidade;";
+            string query = "SELECT CP.Localidade, COUNT(C.ClienteID) AS NumeroClientes " +
+                            "FROM CodigoPostal CP " +
+                            "JOIN Cliente C ON CP.CodPostal = C.CodPostal " +
+                            "GROUP BY CP.Localidade;";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(query, baseDadosConection);
 
@@ -115,6 +114,15 @@ namespace ProjetoAAD
             // Exibe os resultados, por exemplo, em um DataGridView
             dataGridDados.DataSource = dataTable;
         }
+        /// <summary>
+        /// Executa a stored procedure e apaga todos os contactos e o cliente.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void apagarValoresButton_Click(object sender, EventArgs e)
+        {
+
+        }
 
 
 
@@ -123,5 +131,6 @@ namespace ProjetoAAD
         {
 
         }
+
     }
 }

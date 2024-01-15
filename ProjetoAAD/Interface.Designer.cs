@@ -112,6 +112,7 @@
             this.apagarValoresButton.TabIndex = 5;
             this.apagarValoresButton.Text = "Remover";
             this.apagarValoresButton.UseVisualStyleBackColor = true;
+            this.apagarValoresButton.Click += new System.EventHandler(this.apagarValoresButton_Click);
             // 
             // removerTextBox
             // 
