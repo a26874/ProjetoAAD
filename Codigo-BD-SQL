@@ -1,0 +1,142 @@
+CREATE TABLE Cliente (
+  ClienteID             int IDENTITY NOT NULL, 
+  NomeCliente           varchar(255) NOT NULL, 
+  DataNascimento        datetime NOT NULL, 
+  Rua                   varchar(255) NOT NULL, 
+  CodPostal char(8) NOT NULL, 
+  PRIMARY KEY (ClienteID));
+CREATE TABLE CodigoPostal (
+  CodPostal  char(8) NOT NULL, 
+  Localidade varchar(255) NULL, 
+  PRIMARY KEY (CodPostal));
+CREATE TABLE Contacto (
+  ClienteID  int NOT NULL, 
+  TCID int NOT NULL, 
+  PRIMARY KEY (ClienteID, 
+  TCID));
+CREATE TABLE TiposContacto (
+  TCID         int IDENTITY NOT NULL, 
+  DescContacto varchar(255) NOT NULL, 
+  PRIMARY KEY (TCID));
+CREATE TABLE Agente (
+  AgenteID       int IDENTITY NOT NULL, 
+  NomeAgente     varchar(255) NOT NULL, 
+  DataAdesao     datetime NOT NULL, 
+  ComissaoAgente int NOT NULL, 
+  LojaID     int NOT NULL, 
+  PRIMARY KEY (AgenteID));
+CREATE TABLE Reuniao (
+  DataReuniao      datetime NOT NULL, 
+  ClienteID int NOT NULL, 
+  AgenteID   int NOT NULL, 
+  TRID  int NOT NULL, 
+  Observacoes      varchar(255) NOT NULL, 
+  PRIMARY KEY (DataReuniao, 
+  ClienteID, 
+  AgenteID));
+CREATE TABLE Imovel (
+  ImovelID               int IDENTITY NOT NULL, 
+  NumQuartos             int NOT NULL, 
+  NumWC                  int NOT NULL, 
+  AreaTerreno            int NOT NULL, 
+  Preço                  int NOT NULL, 
+  Rua                    varchar(255) NOT NULL, 
+  Piso                   int NULL, 
+  CodPostal  char(8) NOT NULL, 
+  TipoImovelID int NOT NULL, 
+  PRIMARY KEY (ImovelID));
+CREATE TABLE TipoNegocio (
+  TNID      int IDENTITY NOT NULL, 
+  DescNegoc varchar(255) NOT NULL, 
+  PRIMARY KEY (TNID));
+CREATE TABLE ContactoAgente (
+  AgenteID    int NOT NULL, 
+  TCID int NOT NULL, 
+  PRIMARY KEY (AgenteID, 
+  TCID));
+CREATE TABLE Loja (
+  LojaID                int IDENTITY NOT NULL, 
+  NomeLoja              varchar(255) NOT NULL, 
+  Rua                   varchar(255) NOT NULL, 
+  CodPostal char(8) NOT NULL, 
+  PRIMARY KEY (LojaID));
+CREATE TABLE RegistoNegocio (
+  AgenteID           int NOT NULL, 
+  ClienteID         int NOT NULL, 
+  DataDeNegocio            datetime NOT NULL, 
+  TNID          int NOT NULL, 
+  ImovelID int NOT NULL, 
+  PercentagemComissao      int NOT NULL, 
+  PRIMARY KEY (AgenteID, 
+  ClienteID, 
+  DataDeNegocio));
+CREATE TABLE TipoReuniao (
+  TRID        int IDENTITY NOT NULL, 
+  DescReuniao char(255) NOT NULL, 
+  PRIMARY KEY (TRID));
+CREATE TABLE Despesas (
+  DataDespesa      datetime NOT NULL, 
+  LojaID       int NOT NULL, 
+  TDID int NOT NULL, 
+  ValorDespesa     int NOT NULL, 
+  PRIMARY KEY (DataDespesa, 
+  LojaID));
+CREATE TABLE TipoDespesas (
+  TDID        int IDENTITY NOT NULL, 
+  DescDespesa varchar(255) NOT NULL, 
+  PRIMARY KEY (TDID));
+CREATE TABLE ContactoLoja (
+  TCID int NOT NULL, 
+  LojaID        int NOT NULL, 
+  PRIMARY KEY (TCID, 
+  LojaID));
+CREATE TABLE Veiculos (
+  VeiculoID      int IDENTITY NOT NULL, 
+  ModeloID int NOT NULL, 
+  PRIMARY KEY (VeiculoID));
+CREATE TABLE Marca (
+  MarcaID   int IDENTITY NOT NULL, 
+  NomeMarca varchar(255) NOT NULL, 
+  PRIMARY KEY (MarcaID));
+CREATE TABLE Modelo (
+  MarcaID int NOT NULL, 
+  ModeloID     int IDENTITY NOT NULL, 
+  NomeModelo   varchar(255) NOT NULL, 
+  Descricao    varchar(255) NULL, 
+  PRIMARY KEY (ModeloID));
+CREATE TABLE Emprestimo (
+  DataInicio        datetime NOT NULL, 
+  DataFim           datetime NOT NULL, 
+  VeiculoID int NOT NULL, 
+  AgenteID    int NOT NULL, 
+  PRIMARY KEY (DataInicio, 
+  VeiculoID));
+CREATE TABLE TipoImovel (
+  TipoImovelID        int IDENTITY NOT NULL, 
+  DescricaoTipoImovel varchar(255) NOT NULL, 
+  PRIMARY KEY (TipoImovelID));
+GO
+ALTER TABLE Cliente ADD CONSTRAINT FKCliente730328 FOREIGN KEY (CodPostal) REFERENCES CodigoPostal (CodPostal);
+ALTER TABLE ContactoAgente ADD CONSTRAINT FKContactoAg379499 FOREIGN KEY (AgenteID) REFERENCES Agente (AgenteID);
+ALTER TABLE ContactoAgente ADD CONSTRAINT FKContactoAg527611 FOREIGN KEY (TCID) REFERENCES TiposContacto (TCID);
+ALTER TABLE Contacto ADD CONSTRAINT FKContacto249292 FOREIGN KEY (ClienteID) REFERENCES Cliente (ClienteID);
+ALTER TABLE Contacto ADD CONSTRAINT FKContacto894347 FOREIGN KEY (TCID) REFERENCES TiposContacto (TCID);
+ALTER TABLE Agente ADD CONSTRAINT FKAgente409656 FOREIGN KEY (LojaID) REFERENCES Loja (LojaID);
+ALTER TABLE Loja ADD CONSTRAINT FKLoja372115 FOREIGN KEY (CodPostal) REFERENCES CodigoPostal (CodPostal);
+ALTER TABLE RegistoNegocio ADD CONSTRAINT FKRegistoNeg784106 FOREIGN KEY (AgenteID) REFERENCES Agente (AgenteID);
+ALTER TABLE RegistoNegocio ADD CONSTRAINT FKRegistoNeg776178 FOREIGN KEY (TNID) REFERENCES TipoNegocio (TNID);
+ALTER TABLE RegistoNegocio ADD CONSTRAINT FKRegistoNeg895731 FOREIGN KEY (ClienteID) REFERENCES Cliente (ClienteID);
+ALTER TABLE RegistoNegocio ADD CONSTRAINT FKRegistoNeg252967 FOREIGN KEY (ImovelID) REFERENCES Imovel (ImovelID);
+ALTER TABLE Reuniao ADD CONSTRAINT FKReuniao465146 FOREIGN KEY (TRID) REFERENCES TipoReuniao (TRID);
+ALTER TABLE Reuniao ADD CONSTRAINT FKReuniao927489 FOREIGN KEY (ClienteID) REFERENCES Cliente (ClienteID);
+ALTER TABLE Reuniao ADD CONSTRAINT FKReuniao607328 FOREIGN KEY (AgenteID) REFERENCES Agente (AgenteID);
+ALTER TABLE Despesas ADD CONSTRAINT FKDespesas836841 FOREIGN KEY (TDID) REFERENCES TipoDespesas (TDID);
+ALTER TABLE ContactoLoja ADD CONSTRAINT FKContactoLo743796 FOREIGN KEY (TCID) REFERENCES TiposContacto (TCID);
+ALTER TABLE ContactoLoja ADD CONSTRAINT FKContactoLo102122 FOREIGN KEY (LojaID) REFERENCES Loja (LojaID);
+ALTER TABLE Despesas ADD CONSTRAINT FKDespesas759317 FOREIGN KEY (LojaID) REFERENCES Loja (LojaID);
+ALTER TABLE Modelo ADD CONSTRAINT FKModelo810790 FOREIGN KEY (MarcaID) REFERENCES Marca (MarcaID);
+ALTER TABLE Veiculos ADD CONSTRAINT FKVeiculos784344 FOREIGN KEY (ModeloID) REFERENCES Modelo (ModeloID);
+ALTER TABLE Emprestimo ADD CONSTRAINT FKEmprestimo940622 FOREIGN KEY (AgenteID) REFERENCES Agente (AgenteID);
+ALTER TABLE Emprestimo ADD CONSTRAINT FKEmprestimo991341 FOREIGN KEY (VeiculoID) REFERENCES Veiculos (VeiculoID);
+ALTER TABLE Imovel ADD CONSTRAINT FKImovel956203 FOREIGN KEY (CodPostal) REFERENCES CodigoPostal (CodPostal);
+ALTER TABLE Imovel ADD CONSTRAINT FKImovel492087 FOREIGN KEY (TipoImovelID) REFERENCES TipoImovel (TipoImovelID);
